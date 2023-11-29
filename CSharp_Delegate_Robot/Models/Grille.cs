@@ -16,10 +16,7 @@ namespace CSharp_Delegate_Robot.Models
             get { return Width; }
             private set 
             {
-                if (value > 0)
-                {
-                    Width = 10;
-                }
+                Width = 10;
             }
         }
 
@@ -29,10 +26,7 @@ namespace CSharp_Delegate_Robot.Models
             get { return Height; }
             private set
             {
-                if (value > 0)
-                {
-                    Height = 10;
-                }
+                Height = 10;
             }
         }
 
