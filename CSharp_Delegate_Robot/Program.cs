@@ -49,7 +49,9 @@ namespace CSharp_Delegate_Robot
             //Aucun paramètre nécessaire, et ne retourne rien : Permet de lancer plusieurs ordre au robot qui ont été défini par l'utilisateur.
 
             Grille grille = new Grille();
+            grille.InitGame();
             grille.AfficherGrille();
+            
         }
     }
 }

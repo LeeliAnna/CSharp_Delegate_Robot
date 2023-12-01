@@ -11,24 +11,10 @@ namespace CSharp_Delegate_Robot.Models
         #region Propriétés
 
         // Definition de la largeur de la grille toujours positive
-        public int Width 
-        {
-            get { return Width; }
-            private set 
-            {
-                Width = 10;
-            }
-        }
+        public int Width {get; private set;} = 10;
 
         // Definition de la hauteur de la grille toujours positive
-        public int Height 
-        {
-            get { return Height; }
-            private set
-            {
-                Height = 10;
-            }
-        }
+        public int Height { get; private set; } = 10;
 
         //Représente la position du point final à atteindre sur un axe horizontal(entre 0 et Width)
         private int _finalX;
@@ -36,11 +22,8 @@ namespace CSharp_Delegate_Robot.Models
         {
             get { return _finalX; }
             private set 
-            { 
-                if (value > 0 && value < Width) 
-                { 
-                    _finalX = value; 
-                }; 
+            {
+                _finalX = value;  
             } 
         }
 
@@ -54,14 +37,16 @@ namespace CSharp_Delegate_Robot.Models
             }
             private set 
             {
-                if( value > 0 && value < Height)
-                {
-                    _finalY = value;
-                }
+                _finalY = value;
             }
         }
+
+        private string[,] grille = new string[11,11];
         #endregion
 
+        #region MyRegion
+
+        #endregion
 
         #region Méthodes
         //pour méthodes publiques :
@@ -71,19 +56,88 @@ namespace CSharp_Delegate_Robot.Models
 
         public void InitGame()
         {
+            int randWidth;
+            int randHeight;
+            do
+            {
+                randWidth = new Random().Next(0 , 11);
+                randHeight = new Random().Next(0 , 11);
+            } while (randWidth == 0 && randHeight == 0);
+
+            FinalX = randWidth;
+            FinalY = randHeight;
+            
+            grille[0, 0] = "R";
+            grille[FinalX, FinalY] = "X";
+
+            for (int i = 0; i < Height - 1; i++)
+            {
+                for (int j = 0; j < Width - 1; j++)
+                {
+                    if (grille[i, j] != "r" && grille[i,j] != "x")
+                    {
+                        grille[i, j] = "y";
+                    }
+                }
+            }
+
+
+            
 
         }
 
         public void AfficherGrille()
         {
-            for (int i = 0; i < Width; i++)
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+            //Affichage haut grille
+            Console.Write("┏━━");
+            for (int i = 0; i < Width - 1 ; i++)
             {
-                Console.WriteLine("----------------------------------");
-                for (int j = 0; j < Height; j++)
-                {
-                    Console.WriteLine("|  |");
-                }
+                Console.Write("━━┳━━");
             }
+            Console.WriteLine("━━┓");
+
+
+            for (int i = 0; i <= Height - 1 ; i++)
+            {
+                for (int j = 0; j <= Width; j++)
+                {
+                    if (j == 0)
+                    {
+                       Console.Write("┃" + grille[i,j]);
+                    }
+                    else
+                    {
+                        Console.Write(grille[i, j] + " ┃");
+                    }
+                    if(j == Width)
+                    {
+                        if (i < Height - 1)
+                        {
+                            Console.Write("\n┣━━");
+                            for (int k = 0; k <= Width - 2; k++)
+                            {
+                                Console.Write("━━╋━━");
+                            }
+                            Console.Write("━━┫");
+                            
+                        }
+                        
+                    }
+                    
+                }
+                Console.WriteLine();
+
+            }
+
+            //Affiche bas grille
+            Console.Write("┗━━");
+            for (int i = 0; i < Width - 1; i++)
+            { 
+                Console.Write("━━┻━━");
+            }
+            Console.WriteLine("━━┛");
         }
 
         #endregion
